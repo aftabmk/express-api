@@ -1,5 +1,5 @@
 const ax = require("axios");
-const {  marketStatus , glossary , marketTurnover , equityMaster , holiday, mergedDailyReports , allIndices,indexNames, equityApi , tradeInfoApi ,corporateInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi } = require('./Api')
+const { marketStatus , glossary , marketTurnover , equityMaster , holiday, mergedDailyReports , allIndices,indexNames, equityApi , tradeInfoApi ,corporateInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi} = require('./Api')
 
 async function FmarketStatus() {try{const req = await ax.get(marketStatus);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 async function Fglossary() {try{const req = await ax.get(glossary);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
@@ -16,5 +16,6 @@ async function Fintraday(param) {try{const intraday =await intradayApi(param);co
 async function Fhistorical(param) {try{const historical =await historicalApi(param);const req = await ax.get(historical);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 async function Findex(param) {try{const index =await indexApi(param);const req = await ax.get(index);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 async function FindexIntaday(param) {try{const indexIntaday =await indexIntadayApi(param);const req = await ax.get(indexIntaday);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
+async function FindexhistoricalApi(param) {try{const indexIntaday =await indexhistoricalApi(param);const req = await ax.get(indexIntaday);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 
-module.exports = { FmarketStatus , Fglossary , FmarketTurnover ,FequityMaster , Fholiday , FmergedDailyReports , FallIndices , FindexNames , Fequity ,FtradeInfo , FcorporateInfo , Fintraday ,Fhistorical ,Findex ,FindexIntaday}  
+module.exports = { FmarketStatus , Fglossary , FmarketTurnover ,FequityMaster , Fholiday , FmergedDailyReports , FallIndices , FindexNames , Fequity ,FtradeInfo , FcorporateInfo , Fintraday ,Fhistorical ,Findex ,FindexIntaday , FindexhistoricalApi}  
