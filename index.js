@@ -9,7 +9,24 @@ const { FmarketStatus , Fglossary , FmarketTurnover ,FequityMaster , Fholiday , 
 const nse = new NseIndia()
 
 //EXPRESS APP
-const app = ex() ; app.use(cors()) ;const port = process.env.PORT || 5000;
+const app = ex() ; 
+app.use(cors({
+    origin:'http://localhost:4000',
+    credentials:true
+
+})) ;
+const port = process.env.PORT || 5000;
+
+  
+  app.all('*', function(req, res, next) {
+    const origin = cors.origin.contains(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+
+
 const url = `<a href='https://nifty50.netlify.app'>https://nifty50.netlify.app</a>`
 // routes
 app.get(`/`, async (req, res) => {try {return res.status(200).send(`Hello have a nice day please go back to ${url}`);}catch (err) {return res.status(500).json({err: err.toString()})}})
