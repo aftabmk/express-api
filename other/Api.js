@@ -3,15 +3,11 @@
 // 0) market state
 const marketStatus = 'https://www.nseindia.com/api/marketStatus'
 //common
-// 1) glossary
-const glossary = 'https://www.nseindia.com/api/glossary'
 // 2) marketTurnover
 const marketTurnover = 'https://www.nseindia.com/api/market-turnover'
 // 4) Hoiday
 const holiday = 'https://www.nseindia.com/api/holiday-master?type=trading'
-// 1) mergedDailyReports
-const keys = ['capital','derivativives'] 
-const mergedDailyReports = 'https://www.nseindia.com/api/mergedDailyReports?key='+keys[0];
+
 // 1) allIndices
 const allIndices = 'https://www.nseindia.com/api/allIndices'
 // equities
@@ -28,11 +24,20 @@ async function equityApi( param )
     const equity = 'https://www.nseindia.com/api/quote-equity?symbol='+ stockSymbol
     return equity
 }
+//search
+async function autocompleteApi( param )
+{
+    const Search = await param.toUpperCase()
+    // https://www.nseindia.com/api/search/autocomplete?q=NIFTY
+    const equity = 'https://www.nseindia.com/api/search/autocomplete?q='+ Search
+    return equity
+}
 // 1) tradeInfo
 async function tradeInfoApi( param )
 {
     const stockSymbol = await param.toUpperCase()
-    const tradeInfo = 'https://www.nseindia.com/api/equity/tradeInfo'+stockSymbol
+    // https://www.nseindia.com/api/quote-equity?symbol=HEG&section=trade_info
+    const tradeInfo = 'https://www.nseindia.com/api/quote-equity?symbol='+stockSymbol+'&section=trade_info'
     return tradeInfo
 }
 // FINANCIAL
@@ -46,22 +51,32 @@ async function financialInfoApi( param )
 async function corporateInfoApi( param )
 {
     const stockSymbol = await param.toUpperCase()
-    const corporateInfo = 'https://www.nseindia.com/api/equity/corporateInfo/'+stockSymbol
+    // https://www.nseindia.com/api/quote-equity?symbol=HEG&section=corp_info
+    const corporateInfo = 'https://www.nseindia.com/api/quote-equity?symbol='+stockSymbol+'&section=corp_info'
     return corporateInfo
 }
 // 1) intraday
 async function intradayApi( param )
 {
     const stockSymbol = await param.toUpperCase()
-    const intraday = 'https://www.nseindia.com/api/equity/intraday/'+stockSymbol+'?preOpen=false'
+    const intraday = 'https://www.nseindia.com/api/chart-databyindex?index='+stockSymbol+'EQN'
     return intraday
 }
+// option
+// https://www.nseindia.com/api/option-chain-equities?symbol=HCLTECH
+async function optionsApi( param )
+{
+    const stockSymbol = await param.toUpperCase()
+    const  options = 'https://www.nseindia.com/api/option-chain-equities?symbol='+stockSymbol
+    return options
+}
 // 1) historical
-const date = ['2022-01-01','2022-05-01'] 
+const date = ['01-01-2021','01-01-2022'] 
 async function historicalApi( param )
 {
     const stockSymbol = await param.toUpperCase()
-    const historical = 'https://www.nseindia.com/api/equity/historical/'+stockSymbol+'?dateStart='+date[0]+'&dateEnd='+date[1]
+    // https://www.nseindia.com/api/historical/cm/equity?symbol=HCLTECH&series=[%22EQ%22]&from=13-10-2021&to=13-10-2022
+    const historical = 'https://www.nseindia.com/api/historical/cm/equity?symbol='+stockSymbol+'&series=[%22EQ%22]&from='+date[0]+'&to='+date[1]
     return historical
 }
 // indices
@@ -73,28 +88,42 @@ async function indexApi( param )
     return index
 }
 // 1) index
+async function indexPreOpenApi( param )
+{
+    const indexSymbol = await encodeURI(param.toUpperCase())
+    // https://www.nseindia.com/api/chart-databyindex?index=NIFTY%2050&indices=true&preopen=true
+    const indexIntaday = 'https://www.nseindia.com/api/chart-databyindex?index='+indexSymbol+'&indices=true&preopen=true' 
+    return indexIntaday
+}
+// 1) index
 async function indexIntadayApi( param )
 {
     const indexSymbol = await encodeURI(param.toUpperCase())
-    const indexIntaday = 'https://www.nseindia.com/api/index/intraday/'+indexSymbol+'?preOpen=false' 
+    // https://www.nseindia.com/api/chart-databyindex?index=NIFTY%2050&indices=true
+    const indexIntaday = 'https://www.nseindia.com/api/chart-databyindex?index='+indexSymbol+'&indices=true' 
     return indexIntaday
 }
 
 // 1) historicalIndex not working
-const dateindex = ['2022-01-01','2022-05-01'] 
+const dateindex = ['13-10-2021','13-10-2022'] 
 async function indexhistoricalApi( param )
 {
     const indexSymbol = await encodeURI(param.toUpperCase())
-    const indexhistorical = 'https://www.nseindia.com/api/equity/historical/'+indexSymbol+'?dateStart='+dateindex[0]+'&dateEnd='+dateindex[1]
+    // https://www.nseindia.com/api/historical/fo/derivatives?&from=13-10-2021&to=13-10-2022&instrumentType=FUTIDX&symbol=NIFTY
+    const indexhistorical = 'https://www.nseindia.com/api/historical/fo/derivatives?&from='+dateindex[0]+'&to='+dateindex[1]+'&instrumentType=FUTIDX&symbol='+indexSymbol
     return indexhistorical
 }
 
-async function insiderApi( param )
+const start = ['13-09-2022','13-10-2022']
+function insiderApi(data)
 {
-    const indexSymbol = await encodeURI(param.toUpperCase())
-    const indexhistorical = 'https://www.nseindia.com/api/corporates-pit?index=equities&from_date='+dateindex[0]+'&to_date='+dateindex[1]
+    // 3month max
+    // const start = await data
+    const indexhistorical =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start[0]}&to_date=${start[1]}`
+    console.log(indexhistorical)
+    console.log(start)
     return indexhistorical
 }
 
 
-module.exports = { marketStatus , glossary , marketTurnover , holiday, mergedDailyReports , allIndices , equityApi , tradeInfoApi ,corporateInfoApi , financialInfoApi,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , blockDeals}
+module.exports = { marketStatus , marketTurnover , holiday , allIndices , autocompleteApi , indexPreOpenApi,equityApi , tradeInfoApi ,corporateInfoApi , financialInfoApi,intradayApi,historicalApi , optionsApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , blockDeals}
