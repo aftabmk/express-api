@@ -34,7 +34,7 @@ app.get(`/listingToday`, async (req, res) => { try { const api = await FlistingT
 app.get(`/blockDeals`, async (req, res) => { try { const api = await FblockDeals(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
 app.get(`/search/:params`, async (req, res) => { try { const param = req.params.params; const api = await Fautocomplete(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
 app.get(`/options/:params`, async (req, res) => { try { const param = req.params.params; const api = await Foptions(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get('/cookie', (req,res)=>{ res.setHeader ('set-cookie',"cookie"); res.send(res.cookie)})
+app.get('/cookie', (req,res)=>{ res.setHeader ('set-cookie','cookie=private'); res.send("cookie is set")})
 app.get('/all', async (req, res) => {
     const url = 'https://www.nseindia.com/api/allIndices'
     const data = await nse.getData(url)
