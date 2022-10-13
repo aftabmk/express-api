@@ -1,7 +1,7 @@
 const { NseIndia } = require('stock-nse-india')
 const ex = require("express");
 const cors = require('cors')
-const { FmarketStatus, Fglossary, FmarketTurnover, Fholiday, FmergedDailyReports, FallIndices, Fequity, FtradeInfo, FcorporateInfo, FfinancialInfo,Fintraday, Fhistorical, Findex, FindexIntaday, FindexhistoricalApi, FinsiderApi , FlistingToday , FprevListing} = require('./other/functions')
+const { FmarketStatus, Fglossary, FmarketTurnover, Fholiday, FmergedDailyReports, FallIndices, Fequity, FtradeInfo, FcorporateInfo, FfinancialInfo,Fintraday, Fhistorical, Findex, FindexIntaday, FindexhistoricalApi, FinsiderApi , FlistingToday , FprevListing , FblockDeals} = require('./other/functions')
 
 const nse = new NseIndia()
 
@@ -32,6 +32,7 @@ app.get(`/indexhistoricalApi/:params`, async (req, res) => { try { const param =
 app.get(`/insider/:params`, async (req, res) => { try { const param = req.params.params; const api = await FinsiderApi(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
 app.get(`/prevListing`, async (req, res) => { try { const api = await FprevListing(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
 app.get(`/listingToday`, async (req, res) => { try { const api = await FlistingToday(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
+app.get(`/blockDeals`, async (req, res) => { try { const api = await FblockDeals(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
 
 app.get('/all', async (req, res) => {
     const url = 'https://www.nseindia.com/api/allIndices'

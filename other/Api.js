@@ -18,6 +18,8 @@ const allIndices = 'https://www.nseindia.com/api/allIndices'
 // NEW LISTING
 const listingToday = 'https://www.nseindia.com/api/new-listing-today-ipo?index=NewListing'
 const prevListing = 'https://www.nseindia.com/api/new-listing-today?index=RecentListing'
+//block deals
+const blockDeals = 'https://www.nseindia.com/api/new-listing-today?index=RecentListing'
 // const stockSymbol = 'INFY'
 // 1) equity
 async function equityApi( param )
@@ -95,4 +97,4 @@ async function insiderApi( param )
 }
 
 
-module.exports = { marketStatus , glossary , marketTurnover , holiday, mergedDailyReports , allIndices , equityApi , tradeInfoApi ,corporateInfoApi , financialInfoApi,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing}
+module.exports = { marketStatus , glossary , marketTurnover , holiday, mergedDailyReports , allIndices , equityApi , tradeInfoApi ,corporateInfoApi , financialInfoApi,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , blockDeals}

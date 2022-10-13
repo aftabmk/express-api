@@ -1,5 +1,5 @@
 const { NseIndia } = require('stock-nse-india')
-const { marketStatus , glossary , marketTurnover , holiday, mergedDailyReports , allIndices , equityApi , tradeInfoApi ,corporateInfoApi ,financialInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing} = require('./Api')
+const { marketStatus , glossary , marketTurnover , holiday, mergedDailyReports , allIndices , equityApi , tradeInfoApi ,corporateInfoApi ,financialInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , blockDeals} = require('./Api')
 const nse = new NseIndia()
 
 async function FmarketStatus() {try{const req = await nse.getData(marketStatus);const data = req;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
@@ -20,5 +20,6 @@ async function FindexhistoricalApi(param) {try{const indexIntaday =await indexhi
 async function FinsiderApi(param) {try{const indexIntaday =await insiderApi(param);const req = await nse.getData(indexIntaday);const data = req;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 async function FlistingToday() {try{const req = await nse.getData(listingToday);const data = req;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 async function FprevListing() {try{const req = await nse.getData(prevListing);const data = req;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
+async function FblockDeals() {try{const req = await nse.getData(blockDeals);const data = req;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
 
-module.exports = { FmarketStatus , Fglossary , FmarketTurnover , Fholiday , FmergedDailyReports , FallIndices , Fequity ,FtradeInfo , FcorporateInfo , Fintraday , FfinancialInfo,Fhistorical ,Findex ,FindexIntaday , FindexhistoricalApi , FinsiderApi ,FlistingToday , FprevListing}  
+module.exports = { FmarketStatus , Fglossary , FmarketTurnover , Fholiday , FmergedDailyReports , FallIndices , Fequity ,FtradeInfo , FcorporateInfo , Fintraday , FfinancialInfo,Fhistorical ,Findex ,FindexIntaday , FindexhistoricalApi , FinsiderApi ,FlistingToday , FprevListing , FblockDeals}  
