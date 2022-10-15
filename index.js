@@ -1,10 +1,17 @@
 const ex = require("express");
 const cors = require('cors')
+const helmet = require("helmet");
+
 const { FmarketStatus, Fautocomplete ,FmarketTurnover, Fholiday, FallIndices, Fequity, FtradeInfo, FcorporateInfo ,Foptions, FfinancialInfo,Fintraday, FindexPreOpenApi,Fhistorical, Findex, FindexIntaday, Findexhistorical, FinsiderApi , FlistingToday , FprevListing , FblockDeals} = require('./other/functions')
 
 //EXPRESS APP
 const app = ex();
-app.use(cors());
+app.use(helmet());
+app.use(cors({
+    origin:"https:nifty50.netlify.app",
+    credential:true,
+}));
+
 const port = process.env.PORT || 5000;
 const url = `<a href='https://nifty50.netlify.app'>https://nifty50.netlify.app</a>`
 

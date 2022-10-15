@@ -1,3 +1,4 @@
+const { getDate } = require ("../date")
 //API endpoints
 // basics
 // 0) market state
@@ -106,23 +107,28 @@ async function indexIntadayApi( param )
 
 // 1) historicalIndex not working
 const dateindex = ['13-10-2021','13-10-2022'] 
-async function indexhistoricalApi( param )
+function indexhistoricalApi( param )
 {
-    const indexSymbol = await encodeURI(param.toUpperCase())
+    const indexSymbol = encodeURI(param.toUpperCase())
     // https://www.nseindia.com/api/historical/fo/derivatives?&from=13-10-2021&to=13-10-2022&instrumentType=FUTIDX&symbol=NIFTY
     const indexhistorical = 'https://www.nseindia.com/api/historical/fo/derivatives?&from='+dateindex[0]+'&to='+dateindex[1]+'&instrumentType=FUTIDX&symbol='+indexSymbol
     return indexhistorical
 }
 
-const start = ['13-09-2022','13-10-2022']
-function insiderApi(data)
+// const start = 13-09-2022,13-10-2022
+function insiderApi(date)
 {
     // 3month max
-    // const start = await data
-    const indexhistorical =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start[0]}&to_date=${start[1]}`
-    console.log(indexhistorical)
-    console.log(start)
-    return indexhistorical
+            const start = getDate(0,3,0,false,'hyphen')
+            const end = getDate(0,0,0,false,'hyphen')
+            // const start = date.split(',')[0];
+            // const end = date.split(',')[1] ;
+            const indexhistoricalApi =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start}&to_date=${end }`
+            console.log(indexhistoricalApi)
+            return indexhistoricalApi
+        // console.log(indexhistorical)
+        // return indexhistorical
+    // const indexhistorical =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start[0]}&to_date=${start[1]}`
 }
 
 
