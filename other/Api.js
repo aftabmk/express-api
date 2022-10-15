@@ -110,6 +110,8 @@ const dateindex = ['13-10-2021','13-10-2022']
 function indexhistoricalApi( param )
 {
     const indexSymbol = encodeURI(param.toUpperCase())
+    const start = getDate(0,date,0,false,'hyphen')
+    const end = getDate(0,0,0,false,'hyphen')
     // https://www.nseindia.com/api/historical/fo/derivatives?&from=13-10-2021&to=13-10-2022&instrumentType=FUTIDX&symbol=NIFTY
     const indexhistorical = 'https://www.nseindia.com/api/historical/fo/derivatives?&from='+dateindex[0]+'&to='+dateindex[1]+'&instrumentType=FUTIDX&symbol='+indexSymbol
     return indexhistorical
@@ -119,7 +121,7 @@ function indexhistoricalApi( param )
 function insiderApi(date)
 {
     // 3month max
-            const start = getDate(0,3,0,false,'hyphen')
+            const start = getDate(0,date,0,false,'hyphen')
             const end = getDate(0,0,0,false,'hyphen')
             // const start = date.split(',')[0];
             // const end = date.split(',')[1] ;
