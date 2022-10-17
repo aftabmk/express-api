@@ -1,43 +1,30 @@
 const ex = require("express");
 const cors = require('cors')
 const helmet = require("helmet");
-
-const { FmarketStatus, Fautocomplete ,FmarketTurnover, Fholiday, FallIndices, Fequity, FtradeInfo, FcorporateInfo ,Foptions, FfinancialInfo,Fintraday, FindexPreOpenApi,Fhistorical, Findex, FindexIntaday, Findexhistorical, FinsiderApi , FlistingToday , FprevListing , FblockDeals} = require('./other/functions')
-
-//EXPRESS APP
+const cookie = require('cookie-parser')
+const api = require('./Routes/routes')
+//INITIALIZE
 const app = ex();
-app.use(helmet());
-app.use(cors({
-    origin:"https:nifty50.netlify.app",
-    credential:true,
-}));
-
 const port = process.env.PORT || 5000;
+const options = { origin: "http://localhost:5173", credentials: true }
+const random = Math.floor(Math.random() * 101)
+const expiry = 5 * 60 * 1000
+const cookieOptions = { sameSite: 'strict', path: '/', expires: new Date(Date.now() + 900000), httpOnly: true }
 const url = `<a href='https://nifty50.netlify.app'>https://nifty50.netlify.app</a>`
 
+// FUNCTION
+function getCookie(req, res, next) {if(req.headers.cookie){next();return}else{res.status(403).send('403 forbidden')}}
 
+//EXPRESS APP
+app.use(ex.json())
+app.use(ex.urlencoded({ extended: true }))
+app.use(helmet());
+app.use(cors(options));
 // routes
-app.get(`/`, async (req, res) => { try { return res.send(`Hello have a nice day please go back to ${url}`); } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/marketStatus`,async (req, res) => { try { const api = await FmarketStatus(); return res.send(api); } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/marketTurnover`,async (req, res) => { try { const api = await FmarketTurnover(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/holiday`,async (req, res) => { try { const api = await Fholiday(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/allIndices`, async (req, res) => { try { const api = await FallIndices(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/equity/:params`,async (req, res) => { try { const param = req.params.params;/*console.log(param)*/; const api = await Fequity(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/tradeInfo/:params`,async (req, res) => { try { const param = req.params.params; const api = await FtradeInfo(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/financialInfo/:params`, async (req, res) => { try { const param = req.params.params; const api = await FfinancialInfo(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/intraday/:params`,async (req, res) => { try { const param = req.params.params; const api = await Fintraday(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/corporateInfo/:params`, async (req, res) => { try { const param = req.params.params; const api = await FcorporateInfo(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/historical/:params`,async (req, res) => { try { const param = req.params.params; const api = await Fhistorical(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/index/:params`,async (req, res) => { try { const param = req.params.params; const api = await Findex(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/indexIntaday/:params`,async (req, res) => { try { const param = req.params.params; const api = await FindexIntaday(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/indexPreOpen/:params`,async (req, res) => { try { const param = req.params.params; const api = await FindexPreOpenApi(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/indexhistorical/:params`,async (req, res) => { try { const param = req.params.params; const api = await Findexhistorical(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/insider/:params`,async (req, res) => { try { const param = req.params.params;const api = await FinsiderApi(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/prevListing`,async (req, res) => { try { const api = await FprevListing(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/listingToday`,async (req, res) => { try { const api = await FlistingToday(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/blockDeals`,async (req, res) => { try { const api = await FblockDeals(); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/search/:params`, async (req, res) => { try { const param = req.params.params; const api = await Fautocomplete(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
-app.get(`/options/:params`,async (req, res) => { try { const param = req.params.params; const api = await Foptions(param); return res.status(200).send(api) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
+app.get(`/`, async (req, res) => { try { return res.status(202).send(url) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
+app.get(`/account`, async (req, res) => { try { return res.status(202).cookie('cookies', 'hello', cookieOptions).send(url) } catch (err) { return res.status(500).json({ err: err.toString() }) } })
+// api router
+app.use('/api',getCookie,api)
 
 
 app.listen(port, () => { console.log(`running on port http://localhost:5000`) })

@@ -118,10 +118,10 @@ function indexhistoricalApi( param )
 }
 
 // const start = 13-09-2022,13-10-2022
-function insiderApi(date)
+function insiderApi(day,month)
 {
     // 3month max
-            const start = getDate(0,date,0,false,'hyphen')
+            const start = getDate(day,month,0,false,'hyphen')
             const end = getDate(0,0,0,false,'hyphen')
             // const start = date.split(',')[0];
             // const end = date.split(',')[1] ;

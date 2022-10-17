@@ -1,3 +1,4 @@
+const { getDate } = require('../date')
 //API endpoints
 // basics
 // 0) market state
@@ -76,7 +77,7 @@ async function indexIntadayApi( param )
 const dateindex = ['2022-01-01','2022-05-01'] 
 async function indexhistoricalApi( param )
 {
-    const indexSymbol = await encodeURI(param.toUpperCase())
+    const indexSymbol = encodeURI(param.toUpperCase())
     const indexhistorical = '/api/equity/historical/'+indexSymbol+'?dateStart='+dateindex[0]+'&dateEnd='+dateindex[1]
     return indexhistorical
 }

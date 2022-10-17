@@ -2,7 +2,7 @@ function getDate(prevDay,prevMonth,prevFullYear,setYear,type)
 {
     let date = new Date()
     const day = prepend(reduce(date.getDate(),prevDay))
-    const month = prepend(reduce(date.getMonth(),prevMonth))
+    const month = prepend(reduce(date.getMonth()+1,prevMonth))
     const year = prepend(reduce(Number(date.getFullYear().toString().substring(2)),prevFullYear))
     const yearFull = prepend(reduce(date.getFullYear(),prevFullYear)) 
     setYear ? typeYear = year : typeYear = yearFull
@@ -26,6 +26,6 @@ function getDate(prevDay,prevMonth,prevFullYear,setYear,type)
 function reduce(current,reduce){if(current>reduce) return current-reduce;else return current}
 function prepend(number){if(number<10){return '0'+number}else return number}
 
-console.log(getDate(10,1,0,true,'forwardSlash'))
+// console.log(getDate(10,1,0,true,'forwardSlash'))
 
 module.exports = { getDate }
