@@ -1,6 +1,6 @@
 const { NseIndia } = require('stock-nse-india')
 const nse = new NseIndia()
-const { marketStatus , glossary , marketTurnover , equityMaster , holiday, mergedDailyReports , allIndices,indexNames, equityApi , tradeInfoApi ,corporateInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi} = require('../API/api')
+const { marketStatus , glossary , marketTurnover , equityMaster , holiday, mergedDailyReports , allIndices,indexNames, equityApi , tradeInfoApi ,corporateInfoApi ,intradayApi,historicalApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi} = require('./api')
 
 async function FmarketStatus() {try{const req = await nse.getDataByEndpoint(marketStatus);const data = req.data;return data;console.log(data)}catch(e){console.log(e)}}
 async function Fglossary() {try{const req = await nse.getDataByEndpoint(glossary);const data = req.data;return data/* ;console.log(data)*/}catch(e){console.log(e)}}
