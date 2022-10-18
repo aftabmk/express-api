@@ -13,26 +13,7 @@ const options = { origin: "http://localhost:5173", credentials: true }
 const cookieOptions = { sameSite: 'strict', path: '/', expires: new Date(Date.now() + 900000), httpOnly: true }
 
 // FUNCTION
-function getCookie(req, res, next) 
-{
-    if(req.headers.cookie)
-    {
-        if( filterCookie(req.headers.cookie))
-        {
-            next();
-            return
-        }
-        else
-        {
-            res.status(401).send([{'status':401,'description':'Invalid certificate'}])
-            return
-        }
-    }
-    else
-    {
-        res.status(403).send([{'status':403 ,'description':'forbidden'}])
-    }
-}
+function getCookie(req, res, next){if(req.headers.cookie){if( filterCookie(req.headers.cookie)){next();return;}else{res.status(401).send([{'status':401,'description':'Invalid certificate'}]);return;}}else{res.status(403).send([{'status':403 ,'description':'forbidden'}])}}
 
 //EXPRESS APP
 app.use(ex.json())
