@@ -14,10 +14,27 @@ const allIndices = 'https://www.nseindia.com/api/allIndices'
 // equities
 // NEW LISTING
 const listingToday = 'https://www.nseindia.com/api/new-listing-today-ipo?index=NewListing'
+//
 const prevListing = 'https://www.nseindia.com/api/new-listing-today?index=RecentListing'
-//block deals
-const blockDeals = 'https://www.nseindia.com/api/new-listing-today?index=RecentListing'
+//top gainers
+const topgainer = 'https://www.nseindia.com/api/live-analysis-variations?index=gainers'
+// top looser
+const topLooser = 'https://www.nseindia.com/api/live-analysis-variations?index=loosers'
+// Active stocks
+const activeStocks = 'https://www.nseindia.com/api/live-analysis-most-active-securities?index=volume'
+// price band hitter
+const priceBand = 'https://www.nseindia.com/api/live-analysis-price-band-hitter'
+// volume gaineer
+const volumeGainers = 'https://www.nseindia.com/api/live-analysis-volume-gainers'
+// all time high
+const allTimeHigh = 'https://www.nseindia.com/api/live-analysis-52Week?index=high'
+// all time low
+const allTimeLow = 'https://www.nseindia.com/api/live-analysis-52Week?index=low'
+// bulk and block deals
+const largeDeal = 'https://www.nseindia.com/api/snapshot-capital-market-largedeal'
 // const stockSymbol = 'INFY'
+
+
 // 1) equity
 async function equityApi( param )
 {
@@ -128,10 +145,29 @@ function insiderApi(day,month)
             const indexhistoricalApi =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start}&to_date=${end }`
             console.log(indexhistoricalApi)
             return indexhistoricalApi
-        // console.log(indexhistorical)
-        // return indexhistorical
-    // const indexhistorical =  `https://www.nseindia.com/api/corporates-pit?index=equities&from_date=${start[0]}&to_date=${start[1]}`
+}
+
+function shareHolding ( param )
+{
+    const stock = param.toUpperCase()
+    const shareHoldingApi = 'https://www.nseindia.com/api/corporate-share-holdings-master?index=equities&symbol='+stock;
+    return shareHoldingApi
+}
+function promoter(param)
+{
+    const id = param
+    const promoter =`https://www.nseindia.com/api/corporate-share-holdings-equities?ndsId=${id}&index=promoter`
+    console.log(promoter)
+    return promoter
+}
+function public(param)
+{
+    const id = param
+    const public =`https://www.nseindia.com/api/corporate-share-holdings-equities?ndsId=${id}&index=public-shareholder`
+    return public 
 }
 
 
-module.exports = { marketStatus , marketTurnover , holiday , allIndices , autocompleteApi , indexPreOpenApi,equityApi , tradeInfoApi ,corporateInfoApi , financialInfoApi,intradayApi,historicalApi , optionsApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , blockDeals}
+module.exports = { marketStatus , marketTurnover , holiday , allIndices , autocompleteApi , indexPreOpenApi,equityApi , tradeInfoApi ,corporateInfoApi , 
+    financialInfoApi,intradayApi,historicalApi , optionsApi ,indexApi, indexIntadayApi, indexhistoricalApi , insiderApi , listingToday , prevListing , 
+    topgainer, topLooser ,activeStocks ,priceBand,volumeGainers ,allTimeHigh ,allTimeLow , largeDeal , shareHolding , promoter , public }
